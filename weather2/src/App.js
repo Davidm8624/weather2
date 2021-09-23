@@ -16,7 +16,7 @@ function App() {
   const [weather, setWeather] = useState({});
   const search = (e) => {
     if (e.key === "Enter") {
-      fetch(`${api.enpoint}weather?q=${query}&units=metric&APPID=${api.key}`)
+      fetch(`${api.enpoint}weather?q=${query}&units=imperial&APPID=${api.key}`)
         .then((data) => data.json())
         .then((result) => {
           setQuery("");
@@ -41,19 +41,32 @@ function App() {
         </div>
         {typeof weather.main != "undefined" ? (
           <div>
-
-              <div className="location">
-                {weather.name}, {weather.country}
-              </div>
-              <div className="date"> {dateBuild(new Date())}</div>
-
-              <div className="temperature">
-                {Math.round(weather.main.temp)}°C
-                {Math.round(weather.main.feels_like)}
-              </div>
-              <div className="weather">{weather.weather[0].main}</div>
+            <div>
+              {weather.name}, {weather.sys.country}
             </div>
-
+            <div> {dateBuild(new Date())}</div>
+            <div>
+              temp is {Math.floor(weather.main.temp)} Fahrenheit
+            </div>
+            <div>
+              it feels like: {Math.floor(weather.main.feels_like)}
+            </div>
+            <div>
+              max temp: {Math.floor(weather.main.temp_max)}
+              </div>
+              <div>
+              min temp: {Math.floor(weather.main.temp_min)}
+              </div>
+              <div>
+              humidity: {Math.floor(weather.main.humidity)}
+              </div>
+              <div>
+              wind speed {(weather.wind.speed)} mph
+              </div>
+            <div>
+              clouds in the sky: {weather.clouds.all}
+              </div>
+          </div>
         ) : (
           "No input or Location does not exist"
         )}
